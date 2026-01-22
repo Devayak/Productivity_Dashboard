@@ -140,11 +140,25 @@ planner_time.forEach((ele)=>{
 }
 
 dailyPlanner()
-
+let p=document.querySelector('.motivation .quoteBox p')
+let Author=document.querySelector('.motivation .quoteBox h4')
+console.log(p);
 
 async function randomQuotes(){
-  let res=await fetch('https://zenquotes.io/api/quotes')
+ try {
+   p.textContent = "Loading..."
+  const res = await fetch('https://dummyjson.com/quotes')
   let data=await res.json()
   console.log(data);
+  const randomIndex = Math.floor(Math.random() * data.quotes.length)
+  p.innerText = data.quotes[randomIndex].quote
+  Author.innerText=data.quotes[randomIndex].author
+  
+ } catch (error) {
+  console.log(error);
+  
+ }
+  
 }
 randomQuotes()
+

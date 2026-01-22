@@ -106,7 +106,7 @@ section.allElem {
   text-align: center;
   border-radius: 10px;
   position: relative;
-  top: -9%;
+  top: -6%;
   left: 90%;
   font-size: 30px;
   cursor: pointer;
@@ -345,7 +345,8 @@ position: relative;
 .motivation > .quoteBox > h4{
   position: absolute;
   top: 90%;
-  left: 75%;
+  left: 55%;
   padding: 10px;
   text-transform: capitalize;
+  width: 40%;
 }
