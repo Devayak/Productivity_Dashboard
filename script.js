@@ -94,7 +94,8 @@ function todoList() {
 
     document.querySelectorAll(".taskInfo button").forEach((btn) => {
       btn.addEventListener("click", () => {
-        currentTask.splice(btn.id, 1);
+        console.log(currentTask.splice(btn.id, 1));
+            localStorage.setItem("currentTask", JSON.stringify(currentTask));
         renderTaxk();
       });
     });
@@ -106,9 +107,27 @@ todoList();
 
 
 //! daily planner
-function getToday(){
-  return new Date().toISOString().split("T")[0];
+function dayPlanner(){
+  function getToday(){
+  let date=new Date().toISOString().split("T")[0];
+  return  date
 }
+
+
+
+//! check if the stored data is for today then only reset daily tasks
+// const today = getToday();
+// let storedData = JSON.parse(localStorage.getItem("dailyTasks"));
+
+// if (!storedData || storedData.date !== today) {
+//   // new day → reset ONLY daily tasks
+//   storedData = {
+//     date: today,
+//     tasks: []
+//   };
+
+//   localStorage.setItem("dailyTasks", JSON.stringify(storedData));
+// }
 function dailyPlanner(){
   const PlanDay=document.querySelector('.PlanDay')
 
@@ -117,10 +136,10 @@ let hour=Array.from({length:18},(ele,idx)=>{
 })
 
 const today=getToday();
-let storeData=JSON.parse(localStorage.getItem('dailytask'))
+let storeData=JSON.parse(localStorage.getItem('dailyTask'))
 if(!storeData||storeData.dat!==today){
   storeData={date:today,task:{}};
-  localStorage.setItem('dailtTask',JSON.stringify(storeData))
+  localStorage.setItem('dailyTask',JSON.stringify(storeData))
 }
 
 
@@ -151,7 +170,11 @@ planner_time.forEach((ele)=>{
 }
 
 dailyPlanner()
+}
 
+dayPlanner()
+
+//! motivation quote fetch function
 function motivation(){
   let p=document.querySelector('.motivation .quoteBox p')
 let Author=document.querySelector('.motivation .quoteBox h4')
@@ -178,30 +201,37 @@ randomQuotes()
 }
 motivation()
 
+
+//! promodo Timer function
 const promodoTimer=()=>{
   
 let timeDisplay=document.querySelector(".timeDisplay")
 let startBtn=document.querySelector(".promoTimer .timer .controls #startBtn")
 let pauseBtn=document.querySelector(".promoTimer .timer .controls #pauseBtn")
 let resetBtn=document.querySelector(".promoTimer .timer .controls #resetBtn")
-let totalSecond=25*60
+let workSession=true;
+
+// let totalSecond=30*60
+let WORK_TIME=30*60;
+let BREAK_TIME=5*60;
 let timerId=null
 console.log(timeDisplay);
 
- let min=Math.floor(totalSecond/60)
-  let sec= totalSecond%60;
+ let min=Math.floor(WORK_TIME/60)
+  let sec= WORK_TIME%60;
    timeDisplay.innerHTML=`${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
    let minCopy=min;
    let secCopy=sec;
-const updateTimer=()=>{
-   if(totalSecond>0){
-    totalSecond--
-  }
-   let min=Math.floor(totalSecond/60)
-  let sec=totalSecond%60
-  timeDisplay.innerHTML=`${min}:${sec}`
 
-}
+// const updateTimer=()=>{
+//    if(totalSecond>0){
+//     totalSecond--
+//   }
+//    let min=Math.floor(totalSecond/60)
+//   let sec=totalSecond%60
+//   timeDisplay.innerHTML=`${min}:${sec}`
+
+// }
 
 // timerId=setInterval(()=>{
 //   if(totalSecond>0){
@@ -215,6 +245,25 @@ const updateTimer=()=>{
 // timeDisplay.innerHTML=`${min}:${sec}`
 // },10)
 // }
+
+const updateTimer = () => {
+  if (WORK_TIME > 0) {
+    WORK_TIME--;
+  } else {
+    clearInterval(timerId);
+    timerId = null;
+
+    workSession = !workSession; // switch session
+    WORK_TIME = workSession ? WORK_TIME : BREAK_TIME;
+  }
+
+  let min = Math.floor(WORK_TIME / 60);
+  let sec = WORK_TIME % 60;
+
+  timeDisplay.innerHTML =
+    `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+};
+
 pauseBtn.addEventListener('click',()=>{
   clearInterval(timerId)
   timerId=null;
@@ -223,21 +272,24 @@ pauseBtn.addEventListener('click',()=>{
 resetBtn.addEventListener('click',()=>{
   clearInterval(timerId)
   timerId=null
-   totalSecond = minCopy * 60 + secCopy;
-   let min=Math.floor(totalSecond/60);
-   let sec=totalSecond%60
+   WORK_TIME = minCopy * 60 + secCopy;
+   let min=Math.floor(WORK_TIME/60);
+   let sec=WORK_TIME%60
 
   timeDisplay.innerHTML =`${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
     
 })
-console.log(totalSecond);
+console.log(WORK_TIME);
 console.log(startBtn);
+
 startBtn.addEventListener('click', () => {
-  if (!timerId) {
-    timerId = setInterval(updateTimer, 1000);
-  }
+  if (timerId) return;
+
+  WORK_TIME = workSession ? WORK_TIME : BREAK_TIME;
+  updateTimer();
+  timerId = setInterval(updateTimer, 5);
 });
-console.log(totalSecond);
+console.log(WORK_TIME);
 
 
 }
