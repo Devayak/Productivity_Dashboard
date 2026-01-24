@@ -106,13 +106,24 @@ todoList();
 
 
 //! daily planner
-
+function getToday(){
+  return new Date().toISOString().split("T")[0];
+}
 function dailyPlanner(){
   const PlanDay=document.querySelector('.PlanDay')
 
 let hour=Array.from({length:18},(ele,idx)=>{
     return `${6+idx }:00 - ${7+idx}:00`;
 })
+
+const today=getToday();
+let storeData=JSON.parse(localStorage.getItem('dailytask'))
+if(!storeData||storeData.dat!==today){
+  storeData={date:today,task:{}};
+  localStorage.setItem('dailtTask',JSON.stringify(storeData))
+}
+
+
 let hourSum=''
 let data=JSON.parse(localStorage.getItem('dailyTask'))||{}
     console.log(data);
@@ -140,7 +151,9 @@ planner_time.forEach((ele)=>{
 }
 
 dailyPlanner()
-let p=document.querySelector('.motivation .quoteBox p')
+
+function motivation(){
+  let p=document.querySelector('.motivation .quoteBox p')
 let Author=document.querySelector('.motivation .quoteBox h4')
 console.log(p);
 
@@ -162,3 +175,70 @@ async function randomQuotes(){
 }
 randomQuotes()
 
+}
+motivation()
+
+const promodoTimer=()=>{
+  
+let timeDisplay=document.querySelector(".timeDisplay")
+let startBtn=document.querySelector(".promoTimer .timer .controls #startBtn")
+let pauseBtn=document.querySelector(".promoTimer .timer .controls #pauseBtn")
+let resetBtn=document.querySelector(".promoTimer .timer .controls #resetBtn")
+let totalSecond=25*60
+let timerId=null
+console.log(timeDisplay);
+
+ let min=Math.floor(totalSecond/60)
+  let sec= totalSecond%60;
+   timeDisplay.innerHTML=`${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+   let minCopy=min;
+   let secCopy=sec;
+const updateTimer=()=>{
+   if(totalSecond>0){
+    totalSecond--
+  }
+   let min=Math.floor(totalSecond/60)
+  let sec=totalSecond%60
+  timeDisplay.innerHTML=`${min}:${sec}`
+
+}
+
+// timerId=setInterval(()=>{
+//   if(totalSecond>0){
+//     totalSecond--
+//   }
+//    let min=Math.floor(totalSecond/60)
+//   let sec=totalSecond%60
+ 
+ 
+// console.log(min,sec);
+// timeDisplay.innerHTML=`${min}:${sec}`
+// },10)
+// }
+pauseBtn.addEventListener('click',()=>{
+  clearInterval(timerId)
+  timerId=null;
+})
+
+resetBtn.addEventListener('click',()=>{
+  clearInterval(timerId)
+  timerId=null
+   totalSecond = minCopy * 60 + secCopy;
+   let min=Math.floor(totalSecond/60);
+   let sec=totalSecond%60
+
+  timeDisplay.innerHTML =`${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+    
+})
+console.log(totalSecond);
+console.log(startBtn);
+startBtn.addEventListener('click', () => {
+  if (!timerId) {
+    timerId = setInterval(updateTimer, 1000);
+  }
+});
+console.log(totalSecond);
+
+
+}
+promodoTimer()
