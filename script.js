@@ -108,26 +108,20 @@ todoList();
 
 //! daily planner
 function dayPlanner(){
+
+// func to get todays date
+
   function getToday(){
   let date=new Date().toISOString().split("T")[0];
   return  date
-}
+}             
+let today=getToday();
+console.log(today);
 
 
 
-//! check if the stored data is for today then only reset daily tasks
-// const today = getToday();
-// let storedData = JSON.parse(localStorage.getItem("dailyTasks"));
 
-// if (!storedData || storedData.date !== today) {
-//   // new day → reset ONLY daily tasks
-//   storedData = {
-//     date: today,
-//     tasks: []
-//   };
 
-//   localStorage.setItem("dailyTasks", JSON.stringify(storedData));
-// }
 function dailyPlanner(){
   const PlanDay=document.querySelector('.PlanDay')
 
@@ -135,16 +129,23 @@ let hour=Array.from({length:18},(ele,idx)=>{
     return `${6+idx }:00 - ${7+idx}:00`;
 })
 
-const today=getToday();
 let storeData=JSON.parse(localStorage.getItem('dailyTask'))
-if(!storeData||storeData.dat!==today){
-  storeData={date:today,task:{}};
-  localStorage.setItem('dailyTask',JSON.stringify(storeData))
+console.log(storeData.date);
+
+// code to check if the todays date is same as the stored date or not
+
+if(storeData.date != today){
+  dailyTask={date:today}
+  localStorage.setItem('dailyTask',JSON.stringify(dailyTask))
 }
 
 
+
+
+
 let hourSum=''
-let data=JSON.parse(localStorage.getItem('dailyTask'))||{}
+let data=JSON.parse(localStorage.getItem('dailyTask'))||[]
+console.log(data);
     console.log(data);
 hour.forEach((elem,idx)=>{
     // console.log(elem);
@@ -158,13 +159,13 @@ hour.forEach((elem,idx)=>{
 
 
 PlanDay.innerHTML=hourSum
-var dailyTask={}
+var dailyTask={date:today}
 let planner_time=document.querySelectorAll('.pllaner-time input')
 planner_time.forEach((ele)=>{
     ele.addEventListener('change',()=>{
         console.log(ele.id);
        dailyTask[ele.id]=ele.value
-       localStorage.setItem('dailyTask',JSON.stringify(dailyTask))
+       localStorage.setItem('dailyTask',JSON.stringify(dailyTask)) // add task to the localStorage
     })
 })
 }
