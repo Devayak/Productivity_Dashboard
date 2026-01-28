@@ -147,7 +147,7 @@ let hourSum=''
 let data=JSON.parse(localStorage.getItem('dailyTask'))||{}
     console.log(data);
 hour.forEach((elem,idx)=>{
-    console.log(elem);
+    // console.log(elem);
    var savedData=data[idx]||''
     hourSum+=` <div class="pllaner-time">
                        <p>${elem}</p>
@@ -204,65 +204,73 @@ motivation()
 
 //! promodo Timer function
 const promodoTimer=()=>{
-  
+let timer=document.querySelector(".timer")
 let timeDisplay=document.querySelector(".timeDisplay")
 let startBtn=document.querySelector(".promoTimer .timer .controls #startBtn")
 let pauseBtn=document.querySelector(".promoTimer .timer .controls #pauseBtn")
 let resetBtn=document.querySelector(".promoTimer .timer .controls #resetBtn")
 let workSession=true;
 
-// let totalSecond=30*60
+console.log(timer);
+
 let WORK_TIME=30*60;
 let BREAK_TIME=5*60;
-let timerId=null
-console.log(timeDisplay);
+let totalSecond=WORK_TIME;
 
- let min=Math.floor(WORK_TIME/60)
-  let sec= WORK_TIME%60;
+
+let timerId=null
+
+
+ let min=Math.floor(totalSecond/60)
+  let sec= totalSecond%60;
    timeDisplay.innerHTML=`${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
    let minCopy=min;
    let secCopy=sec;
+  // if(workSession==true){
+  //   let min=Math.floor(WORK_TIME/60)
+  // let sec=WORK_TIME%60;
+  // workSession=!workSession
+  // }else{
+  //    let min=Math.floor(BREAK_TIME/60)
+  // let sec=BREAK_TIME%60;
+  // }
+  // console.log(workSession=!workSession);
+  // let totalSecond=workSession?WORK_TIME:BREAK_TIME;
+  // console.log(totalSecond);
 
-// const updateTimer=()=>{
-//    if(totalSecond>0){
-//     totalSecond--
-//   }
-//    let min=Math.floor(totalSecond/60)
-//   let sec=totalSecond%60
-//   timeDisplay.innerHTML=`${min}:${sec}`
-
-// }
-
-// timerId=setInterval(()=>{
-//   if(totalSecond>0){
-//     totalSecond--
-//   }
-//    let min=Math.floor(totalSecond/60)
-//   let sec=totalSecond%60
- 
- 
-// console.log(min,sec);
-// timeDisplay.innerHTML=`${min}:${sec}`
-// },10)
-// }
-
-const updateTimer = () => {
-  if (WORK_TIME > 0) {
-    WORK_TIME--;
-  } else {
-    clearInterval(timerId);
-    timerId = null;
-
-    workSession = !workSession; // switch session
-    WORK_TIME = workSession ? WORK_TIME : BREAK_TIME;
+const updateTimer=()=>{
+  if(totalSecond>0){
+    totalSecond--
+  }else{
+    clearInterval(timerId)
+    timerId=null;
+    workSession=!workSession;
+    totalSecond=workSession?WORK_TIME:BREAK_TIME;
+    
   }
 
-  let min = Math.floor(WORK_TIME / 60);
-  let sec = WORK_TIME % 60;
+  if(totalSecond==WORK_TIME){
+      timer.style.backgroundColor =='pink'
+    }
+  console.log(workSession ? "WORK" : "BREAK", totalSecond);
 
-  timeDisplay.innerHTML =
-    `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
-};
+
+  min=Math.floor(totalSecond/60)
+  sec=totalSecond%60;
+  timeDisplay.innerHTML=`${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`
+}
+
+
+
+startBtn.addEventListener('click', () => {
+  if (timerId) return; 
+
+  timerId = setInterval(updateTimer, 1000);
+});
+
+
+
+
 
 pauseBtn.addEventListener('click',()=>{
   clearInterval(timerId)
@@ -272,9 +280,9 @@ pauseBtn.addEventListener('click',()=>{
 resetBtn.addEventListener('click',()=>{
   clearInterval(timerId)
   timerId=null
-   WORK_TIME = minCopy * 60 + secCopy;
-   let min=Math.floor(WORK_TIME/60);
-   let sec=WORK_TIME%60
+   totalSecond = minCopy * 60 + secCopy;
+   let min=Math.floor(totalSecond/60);
+   let sec=totalSecond%60
 
   timeDisplay.innerHTML =`${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
     
@@ -282,15 +290,13 @@ resetBtn.addEventListener('click',()=>{
 console.log(WORK_TIME);
 console.log(startBtn);
 
-startBtn.addEventListener('click', () => {
-  if (timerId) return;
-
-  WORK_TIME = workSession ? WORK_TIME : BREAK_TIME;
-  updateTimer();
-  timerId = setInterval(updateTimer, 5);
-});
 console.log(WORK_TIME);
 
 
 }
+
+
+
+
+
 promodoTimer()
