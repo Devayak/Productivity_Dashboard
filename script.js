@@ -1,3 +1,5 @@
+
+
 //! navigation to other page  functionalisties
 function openFeatures() {
   let elems = document.querySelectorAll(".elem");
@@ -130,7 +132,7 @@ let hour=Array.from({length:18},(ele,idx)=>{
 })
 
 let storeData=JSON.parse(localStorage.getItem('dailyTask'))
-console.log(storeData.date);
+
 
 // code to check if the todays date is same as the stored date or not
 
@@ -296,8 +298,29 @@ console.log(WORK_TIME);
 
 }
 
-
-
-
-
 promodoTimer()
+
+
+ let header_h2=document.querySelector('.header1 h2')
+ let header_day=document.querySelector('.header1 h1')
+ let header_temp=document.querySelector('.header2 h2')
+ let header_condition=document.querySelector('.header2 h3')
+ let header_humidity=document.querySelector(".header2 h3:nth-of-type(2)")
+ let header_wind=document.querySelector(".header2 h3:nth-of-type(3)")
+
+let apiKey='e70c0d7f25df4f9e8cf70522263001';
+let city='bhubaneswar'
+async function weatherAPICall(){
+  var response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`)
+  data = await response.json()
+  console.log(data);
+ header_temp.innerText=`${data.current.temp_c}°C`
+ header_condition.innerText=data.current.condition.text
+ header_humidity.innerText=`Humidity: ${data.current.humidity}%`
+ header_wind.innerText=`Wind: ${data.current.wind_kph} km/h`
+ 
+}
+
+
+
+weatherAPICall()

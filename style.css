@@ -1,8 +1,8 @@
 :root {
-  --pri: #401a1b;
-  --sec: #381c0a;
-  --tri1: #FEBA17;
-  --tri2: #74512D;
+  --pri: #381c0a;
+  --sec: #74512d;
+  --tri1: #feba17;
+  --tri2: #74512d;
 
   --red: red;
   --green: rgb(9, 138, 89);
@@ -12,15 +12,16 @@
   --gray: #f5f5f5;
 }
 
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
 }
@@ -28,32 +29,112 @@ html, body {
 /* --LAYOUT --- */
 main {
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
+height: auto;
+  min-height: 100%;
   background-color: var(--pri);
+  padding: 1rem;
 }
 
 nav {
   width: 100%;
-  height: 5vh;
-  background-color: var(--tri1);
-}
-
-section.allElem {
-  width: 100%;
-  height: calc(100% - 5vh);
-  background-color: var(--tri2);
-  padding: 20px;
+  height: 60px;
+  padding: 2em ;
+  background-color: var(--sec);
   display: flex;
   justify-content: space-between;
-  position: relative;
+  align-items: center;
+  align-items: center;
+  color: var(--white);
+  margin-bottom: 2rem;
+  border-radius: 1rem;
+}
+nav div {
+  height: 40px;
+  width: 10vw;
+  background-color: var(--white);
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  cursor: pointer;
+  
+}
+
+nav div:active {
+  scale: 0.95;
+}
+nav div h2 {
+  font-size: 1.2rem;
+  font-weight: 900;
+ z-index: 99;
+ color: black;
+}
+
+header {
+  width: 100%;
+  height: 35vh;
+  background-image: url("https://images.unsplash.com/photo-1717361279773-b2e7ee713d2e?q=80&w=3869&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3.5rem;
+  border-radius: 2.5rem;
+  padding: 3rem;
+  color: var(--white);
+}
+.header1 {
+  /* margin-top: -4%; */
+}
+.header1 h2 {
+  font-size: 3rem;
+  font-weight: 500;
+}
+.header1 h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-block-end: 2rem;
+}
+.header1 h4 {
+  font-size: 2rem;
+  font-weight: 400;
+}
+.header2{
+  text-align: right;
+}
+.header2 h2 {
+  font-size: 80px;
+  font-weight: 700;
+}
+.header2 #cloudy {
+  margin-block-end: .5rem;
+  font-size: 2rem;
+  font-weight: 400;
+}
+.header2 h3 {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+section.allElem {
+  padding: 2rem;
+}
+.allFeatures {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  /* overflow: hidden; */
+  /* padding: 20px; */
+  gap: 3rem;
 }
 
 /* -- DASHBOARD CARDS --*/
 .elem {
-  width: 330px;
-  height: 400px;
-  background-color: var(--blue);
-  border-radius: 20px;
+  width: clamp(24rem, 22vw, 20rem);
+  height: 330px;
+  border-radius: 30px;
   overflow: hidden;
   position: relative;
   cursor: pointer;
@@ -70,7 +151,7 @@ section.allElem {
 
 .elem img {
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: cover;
 }
 
@@ -83,15 +164,17 @@ section.allElem {
 
 /* ---FULL SCREEN VIEW ---*/
 .fullElems {
-  width: 100%;
-  height: 100%;
-  background-color: var(--sec);
-  padding: 40px;
-  font-size: 60px;
+   position: fixed;
+  inset: 0;
+  width: 100vw;
+  inset: 0;
+  background-color: var(--pri);
+  padding: 4rem;
   display: none;
-  position: absolute;
-  top: 0;
   z-index: 999;
+  font-size: 2.2rem;
+  min-height: 100vh;
+  height: auto;
 }
 
 .fullElems > h2 {
@@ -101,25 +184,21 @@ section.allElem {
 
 /* Back Button */
 .back {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
   background-color: var(--red);
-  width: 7vw;
-  padding: 10px;
-  text-align: center;
-  border-radius: 10px;
-  position: relative;
-  top: -6%;
-  left: 90%;
-  font-size: 30px;
-  cursor: pointer;
   color: var(--white);
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  cursor: pointer;
 }
 
 /* ---- LAYOUT ----- */
 .fullElems > .toDo {
-  width: 80%;
+  margin-top: 2rem;
   height: 70%;
   display: flex;
-  flex-wrap: wrap;
 }
 
 /* Input Panel */
@@ -172,7 +251,7 @@ section.allElem {
 
 .todoForm button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* TASK LIST  */
@@ -183,13 +262,12 @@ section.allElem {
   padding: 30px;
   border-radius: 0 20px 20px 0;
   overflow-y: auto;
-  
 }
 
-.taskInfo{
+.taskInfo {
   width: 100%;
   height: auto;
-   background-color: white;
+  background-color: white;
   padding: 15px 20px;
   border-radius: 15px;
   font-size: 20px;
@@ -198,7 +276,7 @@ section.allElem {
   align-items: center;
   margin-bottom: 10px;
 }
-.status{
+.status {
   background-color: green;
   padding: 10px;
   border-radius: 10px;
@@ -212,81 +290,69 @@ section.allElem {
   scale: 0.95;
 }
 
-.todoForm>#imp{
+.todoForm > #imp {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
 }
 
-.todoForm>#imp>label{
+.todoForm > #imp > label {
   font-size: 20px;
 }
-.imp{
- display: none;
+.imp {
+  display: none;
   background-color: red;
   padding: 5px;
   border-radius: 10px;
 }
 
-
-
-
 /* Daily Planner*/
 
-.fullElems.dayPlanner-fullPage{
+.fullElems.dayPlanner-fullPage {
   width: 100%;
- height: 200%;
- 
-
- 
+  min-height: 100vh;
+  height: auto;
+  overflow: auto;
 }
 
-.dayPlanner-fullPage h2{
+.dayPlanner-fullPage h2 {
   font-size: 1.2em;
 }
-.dayPlanner-fullPage>.PlanDay{
-  
+.dayPlanner-fullPage > .PlanDay {
   background-color: var(--tri2);
   padding: 20px;
   border-radius: 10px;
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
-
+  max-height: none;
+  height: auto;
 }
-.dayPlanner-fullPage>.PlanDay .pllaner-time{
- 
-
+.dayPlanner-fullPage > .PlanDay .pllaner-time {
   flex: 0 0 calc(50% - 10px); /* 🔥 */
   display: flex;
   position: relative;
 }
-.pllaner-time input{
+.pllaner-time input {
   width: 100%;
   padding: 10px 40px;
-   background-color:var(--pri);
-   outline: none;
-   border: none;
-   border-radius: 5px;
-   padding-top: 30px;
-   font-size: 30px;
-   color: white;
-
-  
+  background-color: var(--pri);
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding-top: 30px;
+  font-size: 30px;
+  color: white;
 }
-.pllaner-time p{
+.pllaner-time p {
   font-size: 20px;
   position: absolute;
   top: 5px;
   left: 10px;
 }
 
-
 /* motivation*/
-
-
-
 
 .motivation > .quoteBox {
   width: 90%;
@@ -305,9 +371,7 @@ section.allElem {
   color: #f5e9dc;
   margin-left: 30%;
   margin-top: 6%;
-position: relative;
-  
-
+  position: relative;
 }
 
 .motivation > .quoteBox p {
@@ -315,12 +379,10 @@ position: relative;
   line-height: 1.6;
   font-weight: 500;
   opacity: 0.95;
- 
- 
 }
 
 .motivation .quoteBox h3,
-.motivation .quoteBox h4  {
+.motivation .quoteBox h4 {
   padding: 10px 25px;
   border-radius: 999px;
   font-size: 0.95rem;
@@ -330,10 +392,7 @@ position: relative;
   background-color: rgba(219, 167, 105, 0.15);
   border: 1px solid rgb(219, 167, 105);
   color: rgb(255, 214, 160);
-   margin-top: -30px;
-
-
-  
+  margin-top: -30px;
 }
 #sQuote {
   position: absolute;
@@ -343,7 +402,7 @@ position: relative;
   opacity: 0.9;
   color: rgba(255, 255, 255, 0.6);
 }
-.motivation > .quoteBox > h4{
+.motivation > .quoteBox > h4 {
   position: absolute;
   top: 90%;
   left: 55%;
@@ -352,49 +411,192 @@ position: relative;
   width: 40%;
 }
 
-.promoTimer h2{
+.promoTimer h2 {
   font-size: 1.5em;
   text-transform: capitalize;
   font-weight: 800;
 }
-.timer{
-  width: 30%;
-  height: 50%;
-  background-color: #74512D;
-  padding: 10px;
+.timer {
+  width: 30vw;
+  height: 40vh;
+  background-color: var(--sec);
+  padding: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: none;
   border-radius: 50px;
   position: absolute;
-  left: 25%;
+  top: 30%;
+  left: 35%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  gap: 20px;
+  font-size: 3rem;
 }
 
-.timeDisplay{
-  
+.timeDisplay {
   font-size: 2em;
   font-weight: 800;
-  color: var(--pri)
+  color: var(--pri);
 }
 
- button{
+button {
   padding: 20px;
   width: 8vw;
-  font-size: .5em;
-  border-radius: 30px;
+  font-size: 0.5em;
+  border-radius: 20px;
   border: none;
   outline: none;
   margin-bottom: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
   transition: all ease 0.4s;
+  font-size: 2rem;
+  font-weight: 700;
 }
 
-.controls button:active{
+.controls button:active {
   box-shadow: 0 4px 8px black;
 }
 
 
 
 
+
+@media (max-width: 1024px) {
+  header {
+    height: auto;
+    flex-direction: column;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .header2 {
+    text-align: center;
+  }
+
+  .header2 h2 {
+    font-size: 4rem;
+  }
+
+  .allFeatures {
+    gap: 2rem;
+  }
+
+  .elem {
+    width: 45%;
+  }
+
+  .timer {
+    width: 50vw;
+    left: 25%;
+  }
+
+  button {
+    width: 12vw;
+  }
+}
+
+
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    height: auto;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  nav div {
+    width: 60%;
+  }
+
+  header {
+    padding: 2rem 1rem;
+  }
+
+  .header1 h1 {
+    font-size: 2.5rem;
+  }
+
+  .header1 h2 {
+    font-size: 2rem;
+  }
+
+  .header1 h4 {
+    font-size: 1.5rem;
+  }
+
+  .header2 h2 {
+    font-size: 3.5rem;
+  }
+
+  .elem {
+    width: 100%;
+    height: 300px;
+  }
+
+  .fullElems {
+    padding: 2rem 1rem;
+    font-size: 1.5rem;
+  }
+
+  .fullElems > .toDo {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .taskInp,
+  .taskDetails {
+    width: 100%;
+    border-radius: 20px;
+  }
+
+  .taskDetails {
+    margin-top: 1rem;
+  }
+
+  .timer {
+    width: 80vw;
+    height: 35vh;
+    left: 10%;
+    top: 35%;
+  }
+
+  button {
+    width: 60%;
+    font-size: 1.2rem;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .header1 h1 {
+    font-size: 2rem;
+  }
+
+  .header2 h2 {
+    font-size: 3rem;
+  }
+
+  .motivation > .quoteBox {
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+  }
+
+  .pllaner-time {
+    flex: 0 0 100%;
+  }
+
+  .pllaner-time input {
+    font-size: 1.2rem;
+  }
+
+  .timer {
+    font-size: 2rem;
+  }
+
+  .timeDisplay {
+    font-size: 1.5em;
+  }
+}
