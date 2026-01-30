@@ -307,9 +307,24 @@ promodoTimer()
  let header_condition=document.querySelector('.header2 h3')
  let header_humidity=document.querySelector(".header2 h3:nth-of-type(2)")
  let header_wind=document.querySelector(".header2 h3:nth-of-type(3)")
+ let header_city=document.querySelector('.header1 .city')
+
+ let detectLocation=()=>{
+  navigator.geolocation.getCurrentPosition(async(position)=>{
+    const lat=position.coords.latitude;
+    const log=position.coords.longitude;
+    console.log(lat,log);
+    var response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${log}&localityLanguage=en`)
+    data = await response.json()
+    console.log(data);
+    header_city.innerText=`${data.city} (${data.principalSubdivision})`
+    city=data.city
+    weatherAPICall(city)
+  })
+ }
+console.log(detectLocation());
 
 let apiKey='e70c0d7f25df4f9e8cf70522263001';
-let city='bhubaneswar'
 async function weatherAPICall(){
   var response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`)
   data = await response.json()
@@ -324,3 +339,97 @@ async function weatherAPICall(){
 
 
 weatherAPICall()
+
+
+//  let header_h2=document.querySelector('.header1 h2')
+//  let header_day=document.querySelector('.header1 h1')
+function getTimeDate(){
+  function Timedate(){
+  const months = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+
+const daysName = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+let date=new Date();
+console.log(date);
+let day=date.getDate();
+let month=months[date.getMonth()];
+let year=date.getFullYear();
+
+let days=daysName[date.getDay()];
+let min=date.getMinutes();
+let hour=date.getHours();
+let sec=date.getSeconds()
+console.log(days);
+console.log(hour);
+console.log(min);
+console.log(sec);
+header_h2.innerText=`${day} ${month} ${year}`
+
+if(hour>=12){
+  header_day.innerText=`${days}, ${hour-12}:${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')} PM`
+}else{
+  header_day.innerText=`${days}, ${hour}:${String(min).padStart(2,'0')} :${String(sec).padStart(2,'0')} AM`
+}
+}
+
+setInterval(()=>{
+ Timedate()
+},1000)
+}
+getTimeDate()
+
+
+/*
+  bg- #222831;
+  nav-#393E46;
+
+* */
+
+function changeTheme(){
+  var theme=document.querySelector('.theme');
+  var rootElement=document.documentElement;
+  const defaultTheme = {
+  pri: getComputedStyle(rootElement).getPropertyValue('--pri'),
+  sec: getComputedStyle(rootElement).getPropertyValue('--sec'),
+  tri1: getComputedStyle(rootElement).getPropertyValue('--tri1'),
+  tri2: getComputedStyle(rootElement).getPropertyValue('--tri2'),
+};
+  var flag=0;
+  theme.addEventListener('click',()=>{
+if (flag === 0) {
+  // 🌙 Dark Coffee Theme
+  rootElement.style.setProperty('--pri', '#1e1b18');
+  rootElement.style.setProperty('--sec', '#2b2622');
+  rootElement.style.setProperty('--tri1', '#feba17');
+  rootElement.style.setProperty('--tri2', '#8a6b3f');
+  flag = 1;
+
+} else if (flag === 1) {
+  // ☀️ Light Cream Theme
+  rootElement.style.setProperty('--pri', '#F1EFEC');
+  rootElement.style.setProperty('--sec', '#D4C9BE');
+  rootElement.style.setProperty('--tri1', '#123458');
+  rootElement.style.setProperty('--tri2', '#6A7BA2');
+  flag = 2;
+
+} else if (flag === 2) {
+  // 🌊 Aqua Dark Theme
+  rootElement.style.setProperty('--pri', '#222831');
+  rootElement.style.setProperty('--sec', '#393E46');
+  rootElement.style.setProperty('--tri1', '#00ADB5');
+  rootElement.style.setProperty('--tri2', '#222831');
+  flag = 3;
+
+} else {
+  // 🔁 ORIGINAL THEME (same as before)
+  rootElement.style.setProperty('--pri', defaultTheme.pri);
+  rootElement.style.setProperty('--sec', defaultTheme.sec);
+  rootElement.style.setProperty('--tri1', defaultTheme.tri1);
+  rootElement.style.setProperty('--tri2', defaultTheme.tri2);
+  flag = 0;
+}
+
+  })
+}
+// changeTheme()
